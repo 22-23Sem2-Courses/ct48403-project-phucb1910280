@@ -2,15 +2,10 @@
 
 Học kỳ 2, Năm học 2022-2023
 
-**MSSV 1** : 
+**MSSV** : B1910280
 
-**Họ tên SV 1**:
+**Họ tên SV**: Đào Vĩnh Phúc
 
-**MSSV 2**:
+**Lớp học phần**: CT484_03
 
-**Họ tên SV 2**:
-
-**Lớp học phần**:
-
-**Tên dự án**:
-
+**Tên dự án**: Ứng dụng đặt vé xe khách đi các tỉnh

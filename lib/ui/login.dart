@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myproject_app/ui/signup.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +10,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
+  var emailController = TextEditingController();
+  var pwController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    pwController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text(
                 'Đăng nhập',
                 style: TextStyle(
-                    color: Color(0xffB0F3F1),
+                    // color: Color(0xffB0F3F1),
+                    color: Color(0xffAFF6CF),
                     fontSize: 40,
                     fontWeight: FontWeight.bold),
               ),
@@ -42,13 +53,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField('Email', true, false)),
+                  child:
+                      customeTextField('Email', true, false, emailController)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField('Mật khẩu', false, hidePassword)),
+                  child: customeTextField(
+                      'Mật khẩu', false, hidePassword, pwController)),
               const SizedBox(
                 height: 20,
               ),
@@ -61,7 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 )),
               ),
-              loginOptionButton('Đăng ký'),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()));
+                  },
+                  child: loginOptionButton('Đăng ký')),
             ],
           ),
         ),
@@ -69,9 +89,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget customeTextField(
-      String hintText, bool isTestFieldEmail, bool needObscureText) {
+  Widget customeTextField(String hintText, bool isTestFieldEmail,
+      bool needObscureText, TextEditingController textEditingController) {
     return TextField(
+      controller: textEditingController,
       obscureText: needObscureText,
       decoration: InputDecoration(
           hintText: hintText,
@@ -116,16 +137,17 @@ class _LoginScreenState extends State<LoginScreen> {
       height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: const BoxDecoration(
-        color: Color(0xff96E4DF),
+        color: Color(0xffAFF6CF),
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
       child: Center(
         child: Text(
           label,
           style: TextStyle(
-              color: Colors.teal[800]!,
-              fontSize: 30,
-              fontWeight: FontWeight.bold),
+            color: Colors.teal[800]!,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

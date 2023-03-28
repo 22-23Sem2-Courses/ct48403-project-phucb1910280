@@ -200,6 +200,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     int c = 0;
     if (name.length < 10) {
       showDialog(
+          barrierColor: Colors.teal,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -220,6 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     if (phone.length < 10 || !phone.startsWith('0')) {
       showDialog(
+          barrierColor: Colors.teal,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -240,6 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     if (!email.contains('@') || email.length < 5 || !email.contains('.')) {
       showDialog(
+          barrierColor: Colors.teal,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -260,6 +263,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     if (passWord.length < 8) {
       showDialog(
+          barrierColor: Colors.teal,
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -280,6 +284,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     if (passWord.compareTo(pwConf) != 0) {
       showDialog(
+          barrierColor: Colors.teal,
           context: context,
           builder: (context) {
             return AlertDialog(

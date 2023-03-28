@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myproject_app/ui/home_page.dart';
+import 'package:myproject_app/ui/ticket_overview_screen.dart';
 import 'package:myproject_app/ui/signup.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,7 +67,14 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20,
               ),
-              loginOptionButton('Đăng nhập'),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()));
+                  },
+                  child: loginOptionButton('Đăng nhập')),
               const SizedBox(
                 height: 60,
                 child: Center(

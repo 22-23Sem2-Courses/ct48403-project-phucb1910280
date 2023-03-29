@@ -1,14 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TicketWidget extends StatelessWidget {
+  final String anhLoaiVe;
   final String hanhTrinh;
   final String gioKhoiHanh;
   final String diemDi;
-  final String giaVe;
+  final double giaVe;
   final String khoanCach;
   const TicketWidget({
     Key? key,
+    required this.anhLoaiVe,
     required this.hanhTrinh,
     required this.gioKhoiHanh,
     required this.diemDi,
@@ -22,7 +24,7 @@ class TicketWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Stack(
         children: [
-          Image.asset('assets/images/veXe.png'),
+          Image.asset('assets/images/$anhLoaiVe.png'),
           Positioned(
             top: 12,
             left: 15,
@@ -63,7 +65,9 @@ class TicketWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    giaVe,
+                    NumberFormat.simpleCurrency(
+                            locale: 'vi-VN', decimalDigits: 0)
+                        .format(giaVe),
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

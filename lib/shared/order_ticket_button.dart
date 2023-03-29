@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderTicketButton extends StatefulWidget {
   final double giaVe;
@@ -17,13 +18,6 @@ class OrderTicketButton extends StatefulWidget {
 class _OrderTicketButtonState extends State<OrderTicketButton> {
   int slVe = 0;
   double tong = 0.0;
-  double t = 0.0;
-
-  @override
-  void initState() {
-    super.initState();
-    t = widget.giaVe;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +91,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                               if (slVe > 0) {
                                                 setState(() {
                                                   slVe--;
-                                                  tong -= t;
+                                                  tong -= widget.giaVe;
                                                 });
                                               }
                                             },
@@ -123,7 +117,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                               if (slVe < widget.soGheConLai) {
                                                 setState(() {
                                                   slVe++;
-                                                  tong += t;
+                                                  tong += widget.giaVe;
                                                 });
                                               }
                                             },
@@ -150,7 +144,9 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                   child: SizedBox(),
                                 ),
                                 Text(
-                                  '$tong VND',
+                                  NumberFormat.simpleCurrency(
+                                          locale: 'vi-VN', decimalDigits: 0)
+                                      .format(tong),
                                   style: const TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
@@ -190,70 +186,6 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
             'Đặt vé',
             style: TextStyle(color: Colors.teal, fontSize: 25),
           )),
-    );
-  }
-
-  Widget ticketsQuantity() {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: Colors.teal,
-              width: 1,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              IconButton(
-                  onPressed: () {
-                    if (slVe > 0) {
-                      setState(() {
-                        slVe--;
-                        tong -= t;
-                      });
-                    }
-                  },
-                  icon: const Icon(Icons.remove)),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              SizedBox(
-                width: 80,
-                child: Center(
-                  child: Text(
-                    '$slVe vé',
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              IconButton(
-                  onPressed: () {
-                    if (slVe < widget.soGheConLai) {
-                      setState(() {
-                        slVe++;
-                        tong += t;
-                      });
-                    }
-                  },
-                  icon: const Icon(Icons.add)),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myproject_app/shared/order_ticket_button.dart';
 
 class TicketDetailScreen extends StatelessWidget {
@@ -148,7 +149,7 @@ class TicketDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Text(
-                'Giá vé: $giaVe VND',
+                'Giá vé: ${NumberFormat.simpleCurrency(locale: 'vi-VN', decimalDigits: 0).format(giaVe)}',
                 style: const TextStyle(fontSize: 22),
               ),
             ),

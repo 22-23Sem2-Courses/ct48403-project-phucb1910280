@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/home_page.dart';
-import 'package:myproject_app/ui/ticket_overview_screen.dart';
 import 'package:myproject_app/ui/signup.dart';
 
 class LoginScreen extends StatefulWidget {

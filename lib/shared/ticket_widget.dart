@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class TicketWidget extends StatelessWidget {
   final String hanhTrinh;
   final String gioKhoiHanh;
-  final String diemDonKhach;
+  final String diemDi;
   final String giaVe;
   final String khoanCach;
   const TicketWidget({
     Key? key,
     required this.hanhTrinh,
     required this.gioKhoiHanh,
-    required this.diemDonKhach,
+    required this.diemDi,
     required this.giaVe,
     required this.khoanCach,
   }) : super(key: key);
@@ -47,7 +47,7 @@ class TicketWidget extends StatelessWidget {
             top: 95,
             left: 35,
             child: Text(
-              'Điểm đi: $diemDonKhach',
+              'Điểm đi: $diemDi',
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.white,

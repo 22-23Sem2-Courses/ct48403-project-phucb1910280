@@ -1,35 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:myproject_app/shared/order_ticket_button.dart';
 
-class TicketDetailScreen extends StatelessWidget {
-  final String hanhTrinh;
-  final String gioKhoiHanh;
-  final String diemDi;
-  final double giaVe;
-  final String khoanCach;
+import '../models/ticket.dart';
 
-  final String diemDen;
-  final int soGhe;
-  final int soGheConLai;
-  final String dcDiemDi;
-  final String dcDiemDen;
-  final int thoiGianDuKien;
+class TicketDetailScreen extends StatelessWidget {
+  final Ticket ticket;
 
   const TicketDetailScreen({
     Key? key,
-    required this.hanhTrinh,
-    required this.gioKhoiHanh,
-    required this.diemDi,
-    required this.giaVe,
-    required this.khoanCach,
-    required this.diemDen,
-    required this.soGhe,
-    required this.soGheConLai,
-    required this.dcDiemDi,
-    required this.dcDiemDen,
-    required this.thoiGianDuKien,
+    required this.ticket,
   }) : super(key: key);
 
   @override
@@ -38,7 +20,7 @@ class TicketDetailScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: Text(hanhTrinh),
+        title: Text(ticket.hanhTrinh),
         elevation: 0,
       ),
       body: Padding(
@@ -59,7 +41,7 @@ class TicketDetailScreen extends StatelessWidget {
                     top: 13,
                     left: 50,
                     child: Text(
-                      diemDi,
+                      ticket.diemDi,
                       style: const TextStyle(fontSize: 25, color: Colors.teal),
                     ),
                   ),
@@ -69,7 +51,7 @@ class TicketDetailScreen extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
-                        dcDiemDi,
+                        ticket.dcDiemDi,
                         maxLines: 2,
                         style: const TextStyle(
                           fontSize: 16,
@@ -83,7 +65,7 @@ class TicketDetailScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          khoanCach,
+                          ticket.khoanCach,
                           style: const TextStyle(fontSize: 20),
                         ),
                         const SizedBox(
@@ -91,7 +73,7 @@ class TicketDetailScreen extends StatelessWidget {
                           child: Center(child: Text('~')),
                         ),
                         Text(
-                          '$thoiGianDuKien tiếng',
+                          '${ticket.thoiGianDuKien} tiếng',
                           style: const TextStyle(fontSize: 20),
                         ),
                       ],
@@ -101,7 +83,7 @@ class TicketDetailScreen extends StatelessWidget {
                     top: 148,
                     left: 50,
                     child: Text(
-                      diemDen,
+                      ticket.diemDen,
                       style: const TextStyle(fontSize: 25, color: Colors.teal),
                     ),
                   ),
@@ -111,7 +93,7 @@ class TicketDetailScreen extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
-                        dcDiemDen,
+                        ticket.dcDiemDen,
                         maxLines: 2,
                         style: const TextStyle(
                           fontSize: 16,
@@ -125,40 +107,55 @@ class TicketDetailScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                'Giờ khởi hành: $gioKhoiHanh',
-                style: const TextStyle(fontSize: 22),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(5.0),
-              child: Text(
-                'Loại xe: Ford Transit 16 chỗ',
-                style: TextStyle(fontSize: 22),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                'Còn lại: $soGheConLai chỗ',
-                style: const TextStyle(fontSize: 22),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                'Giá vé: ${NumberFormat.simpleCurrency(locale: 'vi-VN', decimalDigits: 0).format(giaVe)}',
-                style: const TextStyle(fontSize: 22),
-              ),
-            ),
+            detailInfo('Giờ khởi hành', ticket.gioKhoiHanh,
+                setTealColor: true, setBold: true),
+            detailInfo('Loại xe', 'Ford Transit 16 chỗ'),
+            detailInfo('Số ghế trống', ticket.soGheConLai.toString(),
+                setTealColor: true, setBold: true),
+            detailInfo(
+                'Giá vé',
+                NumberFormat.simpleCurrency(locale: 'vi-VN', decimalDigits: 0)
+                    .format(ticket.giaVe)
+                    .toString(),
+                setTealColor: true,
+                setBold: true),
           ],
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-        child: OrderTicketButton(giaVe: giaVe, soGheConLai: soGheConLai),
+        child: OrderTicketButton(
+            giaVe: ticket.giaVe, soGheConLai: ticket.soGheConLai),
+      ),
+    );
+  }
+
+  Widget detailInfo(String key, dynamic value,
+      {bool setTealColor = false, bool setBold = false}) {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            '$key:',
+            style: const TextStyle(
+              fontSize: 22,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: setBold ? FontWeight.bold : FontWeight.normal,
+              color: setTealColor ? Colors.teal : Colors.black,
+            ),
+          ),
+        ],
       ),
     );
   }

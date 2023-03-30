@@ -7,7 +7,7 @@ class UserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tài khoản'),
+        title: const Text('Tài khoản', style: TextStyle(fontSize: 25)),
         elevation: 0,
       ),
     );

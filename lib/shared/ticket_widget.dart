@@ -1,21 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/ticket.dart';
+
 class TicketWidget extends StatelessWidget {
-  final String anhLoaiVe;
-  final String hanhTrinh;
-  final String gioKhoiHanh;
-  final String diemDi;
-  final double giaVe;
-  final String khoanCach;
+  final Ticket ticket;
   const TicketWidget({
     Key? key,
-    required this.anhLoaiVe,
-    required this.hanhTrinh,
-    required this.gioKhoiHanh,
-    required this.diemDi,
-    required this.giaVe,
-    required this.khoanCach,
+    required this.ticket,
   }) : super(key: key);
 
   @override
@@ -24,12 +17,12 @@ class TicketWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Stack(
         children: [
-          Image.asset('assets/images/$anhLoaiVe.png'),
+          Image.asset('assets/images/${ticket.loaiChuyenXe}.png'),
           Positioned(
             top: 12,
             left: 15,
             child: Text(
-              hanhTrinh,
+              ticket.hanhTrinh,
               style: const TextStyle(
                 fontSize: 25,
               ),
@@ -39,7 +32,7 @@ class TicketWidget extends StatelessWidget {
             top: 47,
             left: 35,
             child: Text(
-              'Giờ khởi hành: $gioKhoiHanh',
+              'Giờ khởi hành: ${ticket.gioKhoiHanh}',
               style: const TextStyle(
                 fontSize: 20,
               ),
@@ -49,7 +42,7 @@ class TicketWidget extends StatelessWidget {
             top: 95,
             left: 35,
             child: Text(
-              'Điểm đi: $diemDi',
+              'Điểm đi: ${ticket.diemDi}',
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -67,7 +60,7 @@ class TicketWidget extends StatelessWidget {
                   Text(
                     NumberFormat.simpleCurrency(
                             locale: 'vi-VN', decimalDigits: 0)
-                        .format(giaVe),
+                        .format(ticket.giaVe),
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -76,7 +69,7 @@ class TicketWidget extends StatelessWidget {
                   ),
                   const Expanded(child: SizedBox()),
                   Text(
-                    khoanCach,
+                    ticket.khoanCach,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.normal,

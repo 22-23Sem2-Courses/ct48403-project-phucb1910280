@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/home_page.dart';
 import 'package:myproject_app/ui/signup.dart';
@@ -19,6 +20,43 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     emailController.dispose();
     pwController.dispose();
+  }
+
+  Future login() async {
+    try {
+      // user login
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: pwController.text.trim());
+      // navigation
+      if (FirebaseAuth.instance.currentUser != null) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const HomePage()),
+          (route) => false,
+        );
+      }
+      // ignore: unused_catch_clause
+    } on FirebaseAuthException catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            title: const Text('Sai Email/ Mật khẩu'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -68,12 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()));
+                    login();
                   },
-                  child: loginOptionButton('Đăng nhập')),
+                  child: loginButton('Đăng nhập')),
               const SizedBox(
                 height: 60,
                 child: Center(
@@ -89,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(
                             builder: (context) => const SignUpScreen()));
                   },
-                  child: loginOptionButton('Đăng ký')),
+                  child: registerButton('Đăng ký')),
             ],
           ),
         ),
@@ -140,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget loginOptionButton(String label) {
+  Widget loginButton(String label) {
     return Container(
       height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
@@ -153,6 +188,31 @@ class _LoginScreenState extends State<LoginScreen> {
           label,
           style: TextStyle(
             color: Colors.teal[800]!,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget registerButton(String label) {
+    return Container(
+      height: 60,
+      width: MediaQuery.of(context).size.width * 0.8,
+      decoration: BoxDecoration(
+        color: Colors.teal,
+        border: Border.all(
+          color: const Color(0xffAFF6CF),
+          width: 4,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(30)),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xffAFF6CF),
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),

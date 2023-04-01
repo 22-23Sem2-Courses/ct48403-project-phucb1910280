@@ -28,11 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cloud_firestore: ^4.5.0
   cupertino_icons: ^1.0.2
+  firebase_auth: ^4.4.0
+  firebase_core: ^2.9.0
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.2.19
-  intl: ^0.18.0
+  intl: ^0.17.0
   provider: ^6.0.5
 
 dev_dependencies:

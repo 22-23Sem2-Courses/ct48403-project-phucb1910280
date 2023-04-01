@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:myproject_app/ui/home_page.dart';
 import 'package:myproject_app/ui/login.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -24,6 +27,233 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailController.dispose();
     pwController.dispose();
     pwConfController.dispose();
+  }
+
+  Future signUp() async {
+    try {
+      if (checkName() &&
+          checkPhoneNumber() &&
+          checkEmail() &&
+          checkPw() &&
+          checkConfPw()) {
+        if (confirmedPW()) {
+          // create user's account
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: pwController.text.trim());
+          // create user's data
+          await createUserData(nameController.text, phoneController.text.trim(),
+              emailController.text.trim());
+          // navigation
+          if (FirebaseAuth.instance.currentUser != null) {
+            // ignore: use_build_context_synchronously
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const HomePage()),
+                (route) => false);
+          }
+        } else {
+          showDialog(
+            barrierColor: Colors.teal,
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                title: const Text('Mật khẩu không trùng khớp'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK')),
+                ],
+              );
+            },
+          );
+        }
+      }
+      // ignore: unused_catch_clause
+    } on FirebaseAuthException catch (e) {
+      showDialog(
+        barrierColor: Colors.teal,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            title: const Text('Có lỗi xảy ra.\nVui lòng thử lại sau.'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future createUserData(
+    String userName,
+    String userPhoneNumber,
+    String userEmail,
+  ) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    var currentUser = auth.currentUser;
+    CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection('XBusCustomers');
+    return collectionRef
+        .doc(currentUser!.email)
+        .collection('userData')
+        .doc(userEmail)
+        .set(
+      {
+        'id': userEmail,
+        'fullName': userName,
+        'phoneNumber': userPhoneNumber,
+        'email': userEmail,
+      },
+    );
+  }
+
+  bool checkName() {
+    if (nameController.text.isEmpty || nameController.text.length < 5) {
+      showDialog(
+        barrierColor: Colors.teal,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: const Text('Vui lòng điền họ tên'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+      return false;
+    }
+    return true;
+  }
+
+  bool checkPhoneNumber() {
+    if (phoneController.text.isEmpty ||
+        phoneController.text.length != 10 ||
+        !phoneController.text.startsWith('0')) {
+      showDialog(
+        barrierColor: Colors.teal,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: const Text('Vui lòng nhập số điện thoại hợp lệ'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+      return false;
+    }
+    return true;
+  }
+
+  bool checkEmail() {
+    if (!emailController.text.contains('@') ||
+        emailController.text.length < 10 ||
+        emailController.text.isEmpty) {
+      showDialog(
+        barrierColor: Colors.teal,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: const Text('Vui lòng nhập email hợp lệ!'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+      return false;
+    }
+    return true;
+  }
+
+  bool checkPw() {
+    if (pwController.text.length < 8 || pwController.text.isEmpty) {
+      showDialog(
+        barrierColor: Colors.teal,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: const Text('Mật khẩu phải dài hơn 8 ký tự'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+      return false;
+    }
+    return true;
+  }
+
+  bool checkConfPw() {
+    if (pwConfController.text.length < 8 || pwConfController.text.isEmpty) {
+      showDialog(
+        barrierColor: Colors.teal,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: const Text('Vui lòng xác nhận mật khẩu'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        },
+      );
+      return false;
+    }
+    return true;
+  }
+
+  bool confirmedPW() {
+    if (pwConfController.text.trim() == pwController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -53,28 +283,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                   width: screenWidth * 0.8,
                   child: customeTextField('Họ tên', const Icon(Icons.person),
-                      true, false, nameController)),
+                      true, false, nameController, TextInputType.text)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField('Số điện thoại',
-                      const Icon(Icons.phone), true, false, phoneController)),
+                  child: customeTextField(
+                      'Số điện thoại',
+                      const Icon(Icons.phone),
+                      true,
+                      false,
+                      phoneController,
+                      TextInputType.number)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
                   child: customeTextField('Email', const Icon(Icons.email),
-                      true, false, emailController)),
+                      true, false, emailController, TextInputType.text)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
                   child: customeTextField('Mật khẩu', const Icon(Icons.lock),
-                      false, hidePassword, pwController)),
+                      false, hidePassword, pwController, TextInputType.text)),
               const SizedBox(
                 height: 10,
               ),
@@ -85,25 +320,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const Icon(Icons.lock),
                       true,
                       hidePassword,
-                      pwConfController)),
+                      pwConfController,
+                      TextInputType.text)),
               const SizedBox(
                 height: 20,
               ),
               GestureDetector(
-                  onTap: () {
-                    if (checkForm(
-                            nameController.text,
-                            phoneController.text,
-                            emailController.text,
-                            pwController.text,
-                            pwConfController.text) !=
-                        5) {
-                      print('Error');
-                    } else {
-                      print('succed');
-                    }
-                  },
-                  child: customeButton('Đăng ký')),
+                onTap: () {
+                  signUp();
+                },
+                child: customeButton('Đăng ký', true),
+              ),
               const SizedBox(
                 height: 60,
                 child: Center(
@@ -119,7 +346,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         MaterialPageRoute(
                             builder: (context) => const LoginScreen()));
                   },
-                  child: customeButton('Đăng nhập')),
+                  child: customeButton('Đăng nhập', false)),
             ],
           ),
         ),
@@ -128,12 +355,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget customeTextField(
-      String hintText,
-      Icon icon,
-      bool isNotPassWordTextField,
-      bool needObscureText,
-      TextEditingController textEditingController) {
+    String hintText,
+    Icon icon,
+    bool isNotPassWordTextField,
+    bool needObscureText,
+    TextEditingController textEditingController,
+    TextInputType textInputType,
+  ) {
     return TextField(
+      keyboardType: textInputType,
       controller: textEditingController,
       obscureText: needObscureText,
       decoration: InputDecoration(
@@ -174,135 +404,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget customeButton(String label) {
+  Widget customeButton(String label, bool isRegisterButton) {
     return Container(
       height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
-      decoration: const BoxDecoration(
-        color: Color(0xffAFF6CF),
-        borderRadius: BorderRadius.all(Radius.circular(30)),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 4,
+          color:
+              isRegisterButton == true ? Colors.teal : const Color(0xffAFF6CF),
+        ),
+        color: isRegisterButton == true ? const Color(0xffAFF6CF) : null,
+        borderRadius: const BorderRadius.all(Radius.circular(30)),
       ),
       child: Center(
         child: Text(
           label,
           style: TextStyle(
-            color: Colors.teal[800]!,
+            color: isRegisterButton == true
+                ? Colors.teal[800]
+                : const Color(0xffAFF6CF),
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
-  }
-
-  int checkForm(
-      String name, String phone, String email, String passWord, String pwConf) {
-    int c = 0;
-    if (name.length < 10) {
-      showDialog(
-          barrierColor: Colors.teal,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              title: const Text('Vui lòng điền họ tên'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('OK')),
-              ],
-            );
-          });
-    } else {
-      c++;
-    }
-    if (phone.length < 10 || !phone.startsWith('0')) {
-      showDialog(
-          barrierColor: Colors.teal,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              title: const Text('Vui lòng nhập só điện thoại hợp lệ'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('OK')),
-              ],
-            );
-          });
-    } else {
-      c++;
-    }
-    if (!email.contains('@') || email.length < 5 || !email.contains('.')) {
-      showDialog(
-          barrierColor: Colors.teal,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              title: const Text('Vui lòng nhập địa chỉ email hợp lệ'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('OK')),
-              ],
-            );
-          });
-    } else {
-      c++;
-    }
-    if (passWord.length < 8) {
-      showDialog(
-          barrierColor: Colors.teal,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              title: const Text('Mật khẩu phải dài hơn 8 ký tự'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('OK')),
-              ],
-            );
-          });
-    } else {
-      c++;
-    }
-    if (passWord.compareTo(pwConf) != 0) {
-      showDialog(
-          barrierColor: Colors.teal,
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              title: const Text('Xác nhận mật khẩu không chính xác'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('OK')),
-              ],
-            );
-          });
-    } else {
-      c++;
-    }
-    return c;
   }
 }

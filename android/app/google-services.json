@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "98176886369",
+    "project_id": "tealxbus",
+    "storage_bucket": "tealxbus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98176886369:android:6164afc1a69b6385576c20",
+        "android_client_info": {
+          "package_name": "com.example.myproject_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98176886369-i51m8sp2eltkho0fje54qo3gmonqr1n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt1Y6uI9hYM2A5p-ZPD9GyRoHLq2Y1DCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98176886369-i51m8sp2eltkho0fje54qo3gmonqr1n0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

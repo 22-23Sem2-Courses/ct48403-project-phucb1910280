@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/tickets_overview_screen.dart';
 import 'package:myproject_app/ui/user_notifications_screen.dart';
-import 'package:myproject_app/ui/user_profile_screen.dart';
+import 'package:myproject_app/ui/user_profile/user_profile_screen.dart';
 import 'package:myproject_app/ui/user_tickets_screen.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({int? pageIndex, super.key}) {
+    if (pageIndex != null) {
+      internalIndex = pageIndex;
+    } else {
+      internalIndex = 0;
+    }
+  }
 
+  late final int internalIndex;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -19,6 +26,12 @@ class _HomePageState extends State<HomePage> {
     const UserNotifications(),
     const UserProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    pageIndex = widget.internalIndex;
+  }
 
   void _changePageIndex(int index) {
     setState(() {

@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/home_page.dart';
-import 'package:myproject_app/ui/signup.dart';
+
+import 'signup.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (_) => const HomePage()),
+          MaterialPageRoute(builder: (_) => HomePage()),
           (route) => false,
         );
       }
@@ -92,14 +93,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child:
-                      customeTextField('Email', true, false, emailController)),
+                  child: customizeTextField(
+                      'Email', true, false, emailController)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField(
+                  child: customizeTextField(
                       'Mật khẩu', false, hidePassword, pwController)),
               const SizedBox(
                 height: 20,
@@ -108,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () {
                     login();
                   },
-                  child: loginButton('Đăng nhập')),
+                  child: customizeButton('Đăng nhập', true)),
               const SizedBox(
                 height: 60,
                 child: Center(
@@ -124,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(
                             builder: (context) => const SignUpScreen()));
                   },
-                  child: registerButton('Đăng ký')),
+                  child: customizeButton('Đăng ký', false)),
             ],
           ),
         ),
@@ -132,87 +133,69 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget customeTextField(String hintText, bool isTestFieldEmail,
+  Widget customizeTextField(String hintText, bool isTestFieldEmail,
       bool needObscureText, TextEditingController textEditingController) {
     return TextField(
       controller: textEditingController,
       obscureText: needObscureText,
       decoration: InputDecoration(
-          hintText: hintText,
-          fillColor: Colors.white,
-          filled: true,
-          prefixIcon: isTestFieldEmail
-              ? const Icon(Icons.email_outlined)
-              : const Icon(Icons.lock_outline_rounded),
-          suffixIcon: !isTestFieldEmail
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      hidePassword = !hidePassword;
-                    });
-                  },
-                  icon: hidePassword
-                      ? Image.asset(
-                          'assets/icons/showPass.png',
-                          color: Colors.grey,
-                        )
-                      : Image.asset('assets/icons/unShowPass.png',
-                          color: Colors.grey))
-              : null,
-          enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(40))),
-          focusedBorder: const OutlineInputBorder(
+        hintText: hintText,
+        fillColor: Colors.white,
+        filled: true,
+        prefixIcon: isTestFieldEmail
+            ? const Icon(Icons.email_outlined)
+            : const Icon(Icons.lock_outline_rounded),
+        suffixIcon: !isTestFieldEmail
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    hidePassword = !hidePassword;
+                  });
+                },
+                icon: hidePassword
+                    ? Image.asset(
+                        'assets/icons/showPass.png',
+                        color: Colors.grey,
+                      )
+                    : Image.asset('assets/icons/unShowPass.png',
+                        color: Colors.grey))
+            : null,
+        enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.teal,
+              color: Colors.white,
               width: 1,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(40)),
-          )),
-    );
-  }
-
-  Widget loginButton(String label) {
-    return Container(
-      height: 60,
-      width: MediaQuery.of(context).size.width * 0.8,
-      decoration: const BoxDecoration(
-        color: Color(0xffAFF6CF),
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-      ),
-      child: Center(
-        child: Text(
-          label,
-          style: TextStyle(
-            color: Colors.teal[800]!,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+            borderRadius: BorderRadius.all(Radius.circular(40))),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.teal,
+            width: 1,
           ),
+          borderRadius: BorderRadius.all(Radius.circular(40)),
         ),
       ),
     );
   }
 
-  Widget registerButton(String label) {
+  Widget customizeButton(String label, bool isLoginButton) {
     return Container(
       height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
-        color: Colors.teal,
         border: Border.all(
-          color: const Color(0xffAFF6CF),
           width: 4,
+          color: const Color(0xffAFF6CF),
         ),
+        color: isLoginButton == true ? const Color(0xffAFF6CF) : null,
         borderRadius: const BorderRadius.all(Radius.circular(30)),
       ),
       child: Center(
         child: Text(
           label,
-          style: const TextStyle(
-            color: Color(0xffAFF6CF),
+          style: TextStyle(
+            color: isLoginButton == true
+                ? Colors.teal[800]
+                : const Color(0xffAFF6CF),
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),

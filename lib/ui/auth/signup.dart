@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/home_page.dart';
-import 'package:myproject_app/ui/login.dart';
+
+import 'login.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -49,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             // ignore: use_build_context_synchronously
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const HomePage()),
+                MaterialPageRoute(builder: (_) => HomePage()),
                 (route) => false);
           }
         } else {
@@ -282,14 +283,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField('Họ tên', const Icon(Icons.person),
+                  child: customizeTextField('Họ tên', const Icon(Icons.person),
                       true, false, nameController, TextInputType.text)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField(
+                  child: customizeTextField(
                       'Số điện thoại',
                       const Icon(Icons.phone),
                       true,
@@ -301,21 +302,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField('Email', const Icon(Icons.email),
+                  child: customizeTextField('Email', const Icon(Icons.email),
                       true, false, emailController, TextInputType.text)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField('Mật khẩu', const Icon(Icons.lock),
+                  child: customizeTextField('Mật khẩu', const Icon(Icons.lock),
                       false, hidePassword, pwController, TextInputType.text)),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                   width: screenWidth * 0.8,
-                  child: customeTextField(
+                  child: customizeTextField(
                       'Xác nhận mật khẩu',
                       const Icon(Icons.lock),
                       true,
@@ -329,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onTap: () {
                   signUp();
                 },
-                child: customeButton('Đăng ký', true),
+                child: customizeButton('Đăng ký', true),
               ),
               const SizedBox(
                 height: 60,
@@ -346,7 +347,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         MaterialPageRoute(
                             builder: (context) => const LoginScreen()));
                   },
-                  child: customeButton('Đăng nhập', false)),
+                  child: customizeButton('Đăng nhập', false)),
             ],
           ),
         ),
@@ -354,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget customeTextField(
+  Widget customizeTextField(
     String hintText,
     Icon icon,
     bool isNotPassWordTextField,
@@ -404,15 +405,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget customeButton(String label, bool isRegisterButton) {
+  Widget customizeButton(String label, bool isRegisterButton) {
     return Container(
       height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         border: Border.all(
           width: 4,
-          color:
-              isRegisterButton == true ? Colors.teal : const Color(0xffAFF6CF),
+          color: const Color(0xffAFF6CF),
         ),
         color: isRegisterButton == true ? const Color(0xffAFF6CF) : null,
         borderRadius: const BorderRadius.all(Radius.circular(30)),

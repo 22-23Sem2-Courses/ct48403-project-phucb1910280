@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:myproject_app/models/list_user_profile_img_url.dart';
 import 'package:myproject_app/ui/home_page.dart';
 
 import 'login.dart';
@@ -116,6 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'fullName': userName,
         'phoneNumber': userPhoneNumber,
         'email': userEmail,
+        'profileImg': ListUserProfileImgURL.listUserProfileImgURL[0],
       },
     );
   }

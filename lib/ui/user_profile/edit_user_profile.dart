@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/home_page.dart';
 
+import '../../shared/popup_change_img_profile.dart';
+
 class EditUserData extends StatefulWidget {
   const EditUserData({super.key});
 
@@ -13,6 +15,7 @@ class EditUserData extends StatefulWidget {
 class _EditUserDataState extends State<EditUserData> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
+  final imgController = TextEditingController();
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _EditUserDataState extends State<EditUserData> {
         setState(() {
           nameController.text = data?['fullName'];
           phoneController.text = data?['phoneNumber'];
+          imgController.text = data?['profileImg'];
         });
       }
     } catch (e) {
@@ -52,6 +56,7 @@ class _EditUserDataState extends State<EditUserData> {
       'phoneNumber': phoneController.text,
     }).then((value) {
       showDialog(
+        barrierDismissible: false,
         barrierColor: Colors.black45,
         context: context,
         builder: (context) {
@@ -146,7 +151,7 @@ class _EditUserDataState extends State<EditUserData> {
           customizeTextField('Số điện thoại:', 'Vui lòng nhập số điện thoại',
               phoneController, TextInputType.number),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Row(
             children: [
@@ -173,6 +178,34 @@ class _EditUserDataState extends State<EditUserData> {
                 width: 10,
               ),
             ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Row(
+              children: [
+                TextButton(
+                    onPressed: () {
+                      showDialog(
+                          barrierDismissible: true,
+                          barrierColor: Colors.black45,
+                          context: context,
+                          builder: (context) {
+                            return PopUpChangeImgProfile(
+                              imgUrl: imgController.text,
+                            );
+                          });
+                    },
+                    child: const Text(
+                      'Đổi ảnh đại diện',
+                      style: TextStyle(
+                        fontSize: 23,
+                      ),
+                    )),
+              ],
+            ),
           ),
         ],
       ),
@@ -233,7 +266,7 @@ class _EditUserDataState extends State<EditUserData> {
         child: Text(
           label,
           style: TextStyle(
-            color: isSaveButton == true ? Colors.white : Colors.teal[800],
+            color: isSaveButton == true ? Colors.white : Colors.teal,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),

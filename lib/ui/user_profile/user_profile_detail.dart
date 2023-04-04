@@ -23,7 +23,11 @@ class UserProfileDetail extends StatelessWidget {
             return ListView(
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 20,
+                ),
+                userAvatar(snapshot.data!.docs[0]['profileImg'].toString()),
+                const SizedBox(
+                  height: 20,
                 ),
                 userDetail(
                     'Họ tên:', snapshot.data!.docs[0]['fullName'].toString()),
@@ -58,10 +62,16 @@ class UserProfileDetail extends StatelessWidget {
             label,
             style: const TextStyle(color: Colors.black, fontSize: 22),
           ),
-          const Expanded(child: SizedBox()),
-          Text(
-            value,
-            style: const TextStyle(color: Colors.teal, fontSize: 22),
+          const SizedBox(
+            width: 20,
+          ),
+          Flexible(
+            child: Text(
+              value,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: const TextStyle(color: Colors.teal, fontSize: 22),
+            ),
           ),
         ],
       ),
@@ -97,6 +107,19 @@ class UserProfileDetail extends StatelessWidget {
           ),
         ),
       ]),
+    );
+  }
+
+  Widget userAvatar(String userImgURL) {
+    return Container(
+      height: 260,
+      width: 260,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: NetworkImage(userImgURL),
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myproject_app/models/list_user_profile_img_url.dart';
 import 'package:myproject_app/ui/home_page.dart';
 
@@ -48,6 +49,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               emailController.text.trim());
           // navigation
           if (FirebaseAuth.instance.currentUser != null) {
+            createUserNotifications();
+
             // ignore: use_build_context_synchronously
             Navigator.pushAndRemoveUntil(
                 context,
@@ -96,6 +99,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
       );
     }
+  }
+
+  Future createUserNotifications() async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    CollectionReference collectionRef = FirebaseFirestore.instance
+        .collection('XBusCustomers')
+        .doc(currentUser!.email)
+        .collection('userNotifications');
+    return collectionRef
+        .doc(DateFormat('dd-MM-yyyy-HH-mm-ss').format(DateTime.now()))
+        .set({
+      'id': DateFormat('dd-MM-yyyy-HH-mm-ss').format(DateTime.now()),
+      'tieuDe': 'Chào mừng đến với tealXBus',
+      'noiDung': 'Bạn có thể cập nhật thông tin của mình ở "Tài khoản"',
+      'daDoc': 'chua',
+      'thoiGian': DateFormat('HH:mm, dd/MM').format(DateTime.now()),
+    });
   }
 
   Future createUserData(

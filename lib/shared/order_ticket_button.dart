@@ -226,8 +226,9 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
       ),
       child: TextButton(
         onPressed: () async {
-          addToTicketOrdered(slVe);
-          addToUserTicketOrdered(slVe);
+          createUserTicketOrdered(slVe);
+          createUserNotifications();
+          createTicketOrdered(slVe);
         },
         child: const Text(
           'Đặt vé',
@@ -240,7 +241,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
     );
   }
 
-  Future addToTicketOrdered(int soLuongVe) async {
+  Future createTicketOrdered(int soLuongVe) async {
     CollectionReference collectionRef =
         FirebaseFirestore.instance.collection('TicketsOrdered');
     return collectionRef.doc(widget.ticket.id).set({
@@ -288,7 +289,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
     });
   }
 
-  Future addToUserTicketOrdered(int soLuongVe) async {
+  Future createUserTicketOrdered(int soLuongVe) async {
     var currentUser = FirebaseAuth.instance.currentUser;
     CollectionReference collectionRef = FirebaseFirestore.instance
         .collection('XBusCustomers')
@@ -306,6 +307,23 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
       'thoiGianDuKien': widget.ticket.thoiGianDuKien,
       'soVe': soLuongVe,
       'tongTienVe': soLuongVe * widget.ticket.giaVe,
+    });
+  }
+
+  Future createUserNotifications() async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    CollectionReference collectionRef = FirebaseFirestore.instance
+        .collection('XBusCustomers')
+        .doc(currentUser!.email)
+        .collection('userNotifications');
+    return collectionRef
+        .doc(DateFormat('dd-MM-yyyy-HH-mm-ss').format(DateTime.now()))
+        .set({
+      'id': DateFormat('dd-MM-yyyy-HH-mm-ss').format(DateTime.now()),
+      'tieuDe': 'Đặt vé thành công',
+      'noiDung': 'Vui lòng đến nhà xe trước 10\' để ổn định chỗ ngồi',
+      'daDoc': 'chua',
+      'thoiGian': DateFormat('HH:mm, dd/MM').format(DateTime.now()),
     });
   }
 }

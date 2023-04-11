@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject_app/ui/tickets_overview_screen.dart';
 import 'package:myproject_app/ui/user_notifications_screen.dart';
 import 'package:myproject_app/ui/user_profile/user_profile_screen.dart';
 import 'package:myproject_app/ui/user_tickets_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../models/notification_provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({int? pageIndex, super.key}) {
@@ -31,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     pageIndex = widget.internalIndex;
+    loadUserData();
   }
 
   void _changePageIndex(int index) {
@@ -39,8 +44,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void loadUserData() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var notificationsCounter =
+          Provider.of<NotificationProvider>(context, listen: false);
+      if (FirebaseAuth.instance.currentUser != null) {
+        notificationsCounter.loadUserNotificationCount();
+      } else {
+        notificationsCounter.resetUserNotificationCount();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var notif = Provider.of<NotificationProvider>(context);
     return Scaffold(
       body: IndexedStack(
         index: pageIndex,
@@ -118,8 +136,8 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         selectedItemColor: Colors.teal,
         unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(
               Icons.home,
@@ -127,7 +145,7 @@ class _HomePageState extends State<HomePage> {
             ),
             label: 'Trang chủ',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.confirmation_num_outlined),
             activeIcon: Icon(
               Icons.confirmation_number_rounded,
@@ -136,14 +154,26 @@ class _HomePageState extends State<HomePage> {
             label: 'Vé xe',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_none_outlined),
-            activeIcon: Icon(
+            icon: Badge(
+              textStyle: const TextStyle(
+                fontSize: 15,
+              ),
+
+              // largeSize: 22,
+              // smallSize: 20,
+              alignment: const AlignmentDirectional(15, -3),
+              label: Text(notif.getNotificationCount().toString()),
+              backgroundColor: Colors.teal,
+              textColor: Colors.white,
+              child: const Icon(Icons.notifications_none),
+            ),
+            activeIcon: const Icon(
               Icons.notifications,
               color: Colors.teal,
             ),
             label: 'Thông báo',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             activeIcon: Icon(
               Icons.person,

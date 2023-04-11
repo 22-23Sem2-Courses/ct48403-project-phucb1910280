@@ -122,7 +122,7 @@ class UserProfileScreen extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                      'tealXBus version v0.1',
+                      'tealXBus version v0.1.1',
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.grey,

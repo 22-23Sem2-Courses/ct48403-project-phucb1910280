@@ -13,6 +13,7 @@ class PopUpChangeImgProfile extends StatefulWidget {
 
 class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
   String _imgUrl = '';
+  int curInd = -1;
 
   @override
   void initState() {
@@ -55,13 +56,24 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
                         focusColor: Colors.teal,
                         onTap: () {
                           setState(() {
+                            curInd = index;
                             _imgUrl = ListUserProfileImgURL
                                 .listUserProfileImgURL[index];
                           });
                         },
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(ListUserProfileImgURL
-                              .listUserProfileImgURL[index]),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50)),
+                            border: Border.all(
+                              color: Colors.teal,
+                              width: index == curInd ? 5 : 0,
+                            ),
+                          ),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(ListUserProfileImgURL
+                                .listUserProfileImgURL[index]),
+                          ),
                         )),
                   );
                 },

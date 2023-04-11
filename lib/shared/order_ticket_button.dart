@@ -1,14 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:myproject_app/ui/home_page.dart';
+
+import '../models/ticket.dart';
 
 class OrderTicketButton extends StatefulWidget {
-  final double giaVe;
-  final int soGheConLai;
+  final Ticket ticket;
+
   const OrderTicketButton({
     Key? key,
-    required this.giaVe,
-    required this.soGheConLai,
+    required this.ticket,
   }) : super(key: key);
 
   @override
@@ -62,7 +66,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                             Row(
                               children: [
                                 const Text(
-                                  'Số ghế:',
+                                  'Số lượng:',
                                   style: TextStyle(fontSize: 25),
                                 ),
                                 const SizedBox(
@@ -91,7 +95,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                               if (slVe > 0) {
                                                 setState(() {
                                                   slVe--;
-                                                  tong -= widget.giaVe;
+                                                  tong -= widget.ticket.giaVe;
                                                 });
                                               }
                                             },
@@ -114,10 +118,11 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                         ),
                                         IconButton(
                                             onPressed: () {
-                                              if (slVe < widget.soGheConLai) {
+                                              if (slVe <
+                                                  widget.ticket.soGheConLai!) {
                                                 setState(() {
                                                   slVe++;
-                                                  tong += widget.giaVe;
+                                                  tong += widget.ticket.giaVe;
                                                 });
                                               }
                                             },
@@ -220,8 +225,9 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
       child: TextButton(
-        onPressed: () {
-          Navigator.pop(context);
+        onPressed: () async {
+          addToTicketOrdered(slVe);
+          addToUserTicketOrdered(slVe);
         },
         child: const Text(
           'Đặt vé',
@@ -232,5 +238,74 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
         ),
       ),
     );
+  }
+
+  Future addToTicketOrdered(int soLuongVe) async {
+    CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection('TicketsOrdered');
+    return collectionRef.doc(widget.ticket.id).set({
+      'id': widget.ticket.id,
+      'hanhTrinh': widget.ticket.hanhTrinh,
+      'maHanhTrinh': widget.ticket.maHanhTrinh,
+      'gioKhoiHanhHienThi': widget.ticket.gioKhoiHanhHienThi,
+      'ngayKhoiHanhHienThi': widget.ticket.ngayKhoiHanhHienThi,
+      'diemDi': widget.ticket.diemDi,
+      'giaVe': widget.ticket.giaVe,
+      'khoanCach': widget.ticket.khoanCach,
+      'diemDen': widget.ticket.diemDen,
+      'soGhe': widget.ticket.soGhe,
+      'soGheConLai': widget.ticket.soGheConLai! - soLuongVe,
+      'dcDiemDi': widget.ticket.dcDiemDi,
+      'dcDiemDen': widget.ticket.dcDiemDen,
+      'thoiGianDuKien': widget.ticket.thoiGianDuKien,
+      'loaiChuyenXe': widget.ticket.loaiChuyenXe,
+    }).then((value) {
+      showDialog(
+        barrierDismissible: false,
+        barrierColor: Colors.black45,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: const Text('Đặt vé thành công!'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage(
+                                  pageIndex: 0,
+                                )),
+                        (route) => false);
+                  },
+                  child: const Text('Về trang chủ')),
+            ],
+          );
+        },
+      );
+    });
+  }
+
+  Future addToUserTicketOrdered(int soLuongVe) async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    CollectionReference collectionRef = FirebaseFirestore.instance
+        .collection('XBusCustomers')
+        .doc(currentUser!.email)
+        .collection('userTicketsOrdered');
+    return collectionRef.doc(widget.ticket.id).set({
+      'id': widget.ticket.id,
+      'hanhTrinh': widget.ticket.hanhTrinh,
+      'gioKhoiHanhHienThi': widget.ticket.gioKhoiHanhHienThi,
+      'ngayKhoiHanhHienThi': widget.ticket.ngayKhoiHanhHienThi,
+      'diemDi': widget.ticket.diemDi,
+      'giaVe': widget.ticket.giaVe,
+      'khoanCach': widget.ticket.khoanCach,
+      'diemDen': widget.ticket.diemDen,
+      'thoiGianDuKien': widget.ticket.thoiGianDuKien,
+      'soVe': soLuongVe,
+      'tongTienVe': soLuongVe * widget.ticket.giaVe,
+    });
   }
 }

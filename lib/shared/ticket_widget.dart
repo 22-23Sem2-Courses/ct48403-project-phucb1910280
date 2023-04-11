@@ -32,7 +32,7 @@ class TicketWidget extends StatelessWidget {
             top: 47,
             left: 35,
             child: Text(
-              'Giờ khởi hành: ${ticket.gioKhoiHanh}',
+              'Giờ khởi hành: ${ticket.gioKhoiHanhHienThi}',
               style: const TextStyle(
                 fontSize: 20,
               ),

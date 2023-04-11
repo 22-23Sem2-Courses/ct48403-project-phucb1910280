@@ -13,7 +13,7 @@ class TicketsOverviewScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: const Text(
-          'Vé xe hôm nay',
+          'Trang chủ',
           style: TextStyle(fontSize: 25),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -25,10 +25,13 @@ class TicketsOverviewScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
             child: Text(
               'Vé đi Sài Gòn',
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic),
             ),
           ),
           SizedBox(
@@ -95,7 +98,10 @@ class TicketsOverviewScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(
               'Vé đi tỉnh khác',
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic),
             ),
           ),
           ListView(

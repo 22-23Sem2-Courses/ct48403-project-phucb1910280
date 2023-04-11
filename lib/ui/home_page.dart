@@ -45,15 +45,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadUserData() async {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var notificationsCounter =
-          Provider.of<NotificationProvider>(context, listen: false);
-      if (FirebaseAuth.instance.currentUser != null) {
-        notificationsCounter.loadUserNotificationCount();
-      } else {
-        notificationsCounter.resetUserNotificationCount();
-      }
-    });
+    var notificationsCounter =
+        Provider.of<NotificationProvider>(context, listen: false);
+    if (FirebaseAuth.instance.currentUser != null) {
+      await notificationsCounter.loadUserNotificationCount();
+    } else {
+      await notificationsCounter.resetUserNotificationCount();
+    }
   }
 
   @override
@@ -158,13 +156,16 @@ class _HomePageState extends State<HomePage> {
               textStyle: const TextStyle(
                 fontSize: 15,
               ),
-
-              // largeSize: 22,
-              // smallSize: 20,
               alignment: const AlignmentDirectional(15, -3),
-              label: Text(notif.getNotificationCount().toString()),
-              backgroundColor: Colors.teal,
-              textColor: Colors.white,
+              label: notif.getNotificationCount() != 0
+                  ? Text(notif.getNotificationCount().toString())
+                  : const Text(''),
+              backgroundColor: notif.getNotificationCount() != 0
+                  ? Colors.teal
+                  : Colors.transparent,
+              textColor: notif.getNotificationCount() != 0
+                  ? Colors.white
+                  : Colors.transparent,
               child: const Icon(Icons.notifications_none),
             ),
             activeIcon: const Icon(

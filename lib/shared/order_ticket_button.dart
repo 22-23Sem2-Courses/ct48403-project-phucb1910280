@@ -295,7 +295,9 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
         .collection('XBusCustomers')
         .doc(currentUser!.email)
         .collection('userTicketsOrdered');
-    return collectionRef.doc(widget.ticket.id).set({
+    return collectionRef
+        .doc(DateFormat('dd-MM-yyyy-HH-mm-ss').format(DateTime.now()))
+        .set({
       'id': widget.ticket.id,
       'hanhTrinh': widget.ticket.hanhTrinh,
       'gioKhoiHanhHienThi': widget.ticket.gioKhoiHanhHienThi,

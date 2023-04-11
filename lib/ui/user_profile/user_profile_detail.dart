@@ -10,6 +10,7 @@ class UserProfileDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: const Text('Thông tin của tôi'),
       ),
       body: StreamBuilder(
@@ -80,7 +81,7 @@ class UserProfileDetail extends StatelessWidget {
 
   Widget editProfileButton() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+      margin: const EdgeInsets.fromLTRB(10, 0, 10, 5),
       height: 60,
       decoration: BoxDecoration(
         border: Border.all(

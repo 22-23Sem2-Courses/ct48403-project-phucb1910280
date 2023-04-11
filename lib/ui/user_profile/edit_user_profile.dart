@@ -140,6 +140,7 @@ class _EditUserDataState extends State<EditUserData> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chỉnh sửa thông tin'),
+        elevation: 0,
       ),
       body: ListView(
         children: [

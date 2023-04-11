@@ -116,6 +116,19 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    child: Text(
+                      'tealXBus version v0.1',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
+                  ),
                 ],
               );
             } else {

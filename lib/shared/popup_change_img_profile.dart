@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myproject_app/models/list_user_profile_img_url.dart';
+import 'package:myproject_app/ui/home_page.dart';
 
 class PopUpChangeImgProfile extends StatefulWidget {
   final String imgUrl;
@@ -119,7 +120,13 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
                   );
                 },
               ).then((value) {
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomePage(
+                              pageIndex: 3,
+                            )),
+                    (route) => false);
               });
             });
           },

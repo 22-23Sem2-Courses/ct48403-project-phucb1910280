@@ -50,8 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           // navigation
           if (FirebaseAuth.instance.currentUser != null) {
             createUserNotifications();
-
-            // ignore: use_build_context_synchronously
+            if (context.mounted) {}
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => HomePage()),
@@ -178,7 +177,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
-            content: const Text('Vui lòng nhập số điện thoại hợp lệ'),
+            title: const Text('Số ĐT không hợp lệ'),
+            content: const Text('Số ĐT gồm 10 chữ số, bắt đầu bằng 0'),
             actions: [
               TextButton(
                   onPressed: () {
@@ -195,7 +195,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   bool checkEmail() {
-    if (!emailController.text.contains('@') ||
+    if (emailController.text.contains('"') ||
+        emailController.text.contains("'") ||
+        !emailController.text.contains('.') ||
+        !emailController.text.contains('@') ||
         emailController.text.length < 10 ||
         emailController.text.isEmpty) {
       showDialog(
@@ -205,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
-            content: const Text('Vui lòng nhập email hợp lệ!'),
+            title: const Text('Email không hợp lệ'),
             actions: [
               TextButton(
                   onPressed: () {
@@ -230,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
-            content: const Text('Mật khẩu phải dài hơn 8 ký tự'),
+            title: const Text('Mật khẩu phải từ 8 ký tự'),
             actions: [
               TextButton(
                   onPressed: () {
@@ -255,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
-            content: const Text('Vui lòng xác nhận mật khẩu'),
+            title: const Text('Vui lòng xác nhận mật khẩu'),
             actions: [
               TextButton(
                   onPressed: () {

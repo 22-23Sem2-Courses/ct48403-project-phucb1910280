@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           password: pwController.text.trim());
       // navigation
       if (FirebaseAuth.instance.currentUser != null) {
-        // ignore: use_build_context_synchronously
+        if (context.mounted) {}
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => HomePage()),

@@ -226,9 +226,31 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
       ),
       child: TextButton(
         onPressed: () async {
-          createUserTicketOrdered(slVe);
-          createUserNotifications();
-          createTicketOrdered(slVe);
+          if (slVe > 0) {
+            createUserTicketOrdered(slVe);
+            createUserNotifications();
+            createTicketOrdered(slVe);
+          } else {
+            showDialog(
+              barrierDismissible: true,
+              barrierColor: Colors.black45,
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  content: const Text('Vui lòng chọn số lượng vé'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK')),
+                  ],
+                );
+              },
+            );
+          }
         },
         child: const Text(
           'Đặt vé',

@@ -13,74 +13,85 @@ class TicketWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Stack(
         children: [
-          Image.asset('assets/images/${ticket.loaiChuyenXe}.png'),
+          SizedBox(
+              width: s * 0.95,
+              height: s * 0.42,
+              child: Image.asset(
+                'assets/images/${ticket.loaiChuyenXe}.png',
+                fit: BoxFit.fitWidth,
+              )),
           Positioned(
-            top: 12,
-            left: 15,
+            top: s * 0.02,
+            left: s * 0.04,
             child: Text(
               ticket.hanhTrinh,
-              style: const TextStyle(
-                fontSize: 25,
+              style: TextStyle(
+                fontSize: s * 0.07,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
           Positioned(
-            top: 47,
-            left: 35,
+            top: s * 0.118,
+            left: s * 0.075,
             child: Text(
               'Giờ khởi hành: ${ticket.gioKhoiHanhHienThi}',
-              style: const TextStyle(
-                fontSize: 20,
+              style: TextStyle(
+                fontSize: s * 0.06,
               ),
             ),
           ),
           Positioned(
-            top: 95,
-            left: 35,
+            top: s * 0.23,
+            left: s * 0.075,
             child: Text(
               'Điểm đi: ${ticket.diemDi}',
-              style: const TextStyle(
-                fontSize: 20,
+              style: TextStyle(
+                fontSize: s * 0.06,
                 color: Colors.white,
               ),
             ),
           ),
           Positioned(
-            top: 130,
-            left: 15,
+            top: s * 0.33,
+            left: s * 0.04,
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.85,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     NumberFormat.simpleCurrency(
                             locale: 'vi-VN', decimalDigits: 0)
                         .format(ticket.giaVe),
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: s * 0.06,
                       fontWeight: FontWeight.bold,
                       color: Colors.yellow,
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
+                  SizedBox(
+                    width: s * 0.07,
+                  ),
                   Text(
                     ticket.khoanCach,
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: s * 0.055,
                       fontWeight: FontWeight.normal,
                       color: Colors.white,
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
-                  const Text(
+                  SizedBox(
+                    width: s * 0.07,
+                  ),
+                  Text(
                     'Chi tiết >>',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: s * 0.06,
                       fontWeight: FontWeight.normal,
                       color: Colors.yellow,
                     ),

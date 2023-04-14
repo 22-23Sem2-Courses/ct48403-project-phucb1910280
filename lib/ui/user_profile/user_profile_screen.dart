@@ -10,9 +10,10 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tài khoản', style: TextStyle(fontSize: 25)),
+        title: Text('Tài khoản', style: TextStyle(fontSize: s * 0.05)),
         elevation: 0,
       ),
       body: StreamBuilder(
@@ -29,7 +30,7 @@ class UserProfileScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    height: 80,
+                    height: s * 0.15,
                     decoration: BoxDecoration(
                         color: Colors.teal[50],
                         borderRadius:
@@ -37,8 +38,8 @@ class UserProfileScreen extends StatelessWidget {
                     child: Center(
                       child: ListTile(
                         leading: Container(
-                          height: 70,
-                          width: 70,
+                          height: s * 0.1,
+                          width: s * 0.1,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
@@ -51,8 +52,8 @@ class UserProfileScreen extends StatelessWidget {
                         title: Text(
                           snapshot.data!.docs[0]['fullName'].toString(),
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 27, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: s * 0.055, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -68,10 +69,11 @@ class UserProfileScreen extends StatelessWidget {
                               builder: (context) => const UserProfileDetail()));
                     },
                     child: customizeText(
+                      context,
                       'Thông tin cá nhân',
-                      const Icon(
+                      Icon(
                         Icons.person_outline,
-                        size: 30,
+                        size: s * 0.055,
                         color: Colors.black,
                       ),
                     ),
@@ -84,10 +86,11 @@ class UserProfileScreen extends StatelessWidget {
                               builder: (context) => const EditUserData()));
                     },
                     child: customizeText(
+                      context,
                       'Chỉnh sửa thông tin',
-                      const Icon(
+                      Icon(
                         Icons.edit_outlined,
-                        size: 30,
+                        size: s * 0.06,
                         color: Colors.black,
                       ),
                     ),
@@ -108,10 +111,11 @@ class UserProfileScreen extends StatelessWidget {
                       }
                     },
                     child: customizeText(
+                      context,
                       'Đăng xuất',
-                      const Icon(
+                      Icon(
                         Icons.logout,
-                        size: 30,
+                        size: s * 0.055,
                         color: Colors.black,
                       ),
                     ),
@@ -119,12 +123,12 @@ class UserProfileScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
                       'tealXBus version v0.1.1',
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: s * 0.045,
                           color: Colors.grey,
                           fontStyle: FontStyle.italic),
                     ),
@@ -140,21 +144,22 @@ class UserProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget customizeText(String label, Icon icon,
+  Widget customizeText(BuildContext context, String label, Icon icon,
       {Color textColor = Colors.black}) {
+    var s = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 7, 15, 7),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           icon,
-          const SizedBox(
-            width: 20,
+          SizedBox(
+            width: s * 0.035,
           ),
           Text(
             label,
             style: TextStyle(
-              fontSize: 25,
+              fontSize: s * 0.05,
               color: textColor,
             ),
           ),

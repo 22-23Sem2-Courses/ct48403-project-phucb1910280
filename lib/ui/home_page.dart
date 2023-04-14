@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var notif = Provider.of<NotificationProvider>(context);
+    var s = MediaQuery.of(context).size.width;
     return Scaffold(
       body: IndexedStack(
         index: pageIndex,
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             context: context,
             builder: (context) {
               return Container(
-                height: 320,
+                height: s * 0.6,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   color: Colors.white,
@@ -84,38 +85,37 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const CircleAvatar(
-                        radius: 80,
-                        backgroundImage: AssetImage(
+                      CircleAvatar(
+                        radius: s * 0.15,
+                        backgroundImage: const AssetImage(
                           'assets/images/XBus_avt.jpg',
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
+                      SizedBox(
+                        height: s * 0.045,
                       ),
-                      const Text(
+                      Text(
                         'Xe Khách tealXBus',
-                        style: TextStyle(fontSize: 25),
+                        style: TextStyle(fontSize: s * 0.05),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const Expanded(child: SizedBox()),
                       Row(
                         children: [
                           Expanded(
                             child: TextButton.icon(
                                 onPressed: () {},
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.phone,
-                                  size: 30,
+                                  size: s * 0.035,
                                 ),
-                                label: const Text(
+                                label: Text(
                                   '0919983995 - Mr Phuc',
-                                  style: TextStyle(fontSize: 25),
+                                  style: TextStyle(fontSize: s * 0.05),
                                 )),
                           ),
                         ],
                       ),
+                      const Expanded(child: SizedBox()),
                     ],
                   ),
                 ),
@@ -123,14 +123,20 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
-        icon: const Icon(Icons.local_phone),
-        label: const Text('Hotline', style: TextStyle(fontSize: 20)),
+        icon: Icon(
+          Icons.local_phone,
+          size: s * 0.04,
+        ),
+        label: Text('Hotline', style: TextStyle(fontSize: s * 0.04)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: _changePageIndex,
         currentIndex: pageIndex,
         elevation: 0,
+        iconSize: s * 0.05,
+        selectedFontSize: s * 0.035,
+        unselectedFontSize: s * 0.03,
         backgroundColor: Colors.white,
         selectedItemColor: Colors.teal,
         unselectedItemColor: Colors.grey,
@@ -153,10 +159,11 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Badge(
-              textStyle: const TextStyle(
-                fontSize: 15,
+              largeSize: s * 0.035,
+              textStyle: TextStyle(
+                fontSize: s * 0.026,
               ),
-              alignment: const AlignmentDirectional(15, -3),
+              alignment: AlignmentDirectional(s * 0.03, -s * 0.01),
               label: notif.getNotificationCount() != 0
                   ? Text(notif.getNotificationCount().toString())
                   : const Text(''),

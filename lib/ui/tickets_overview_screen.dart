@@ -9,12 +9,13 @@ class TicketsOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Trang chủ',
-          style: TextStyle(fontSize: 25),
+          style: TextStyle(fontSize: s * 0.05),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -24,18 +25,18 @@ class TicketsOverviewScreen extends StatelessWidget {
         shrinkWrap: false,
         scrollDirection: Axis.vertical,
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
             child: Text(
               'Vé đi Sài Gòn',
               style: TextStyle(
-                  fontSize: 25,
+                  fontSize: s * 0.06,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic),
             ),
           ),
           SizedBox(
-            height: 174,
+            height: s * 0.45,
             child: ListView(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
@@ -50,8 +51,10 @@ class TicketsOverviewScreen extends StatelessWidget {
                                   ticket: ListTicket.veDiHCM[0],
                                 )));
                   },
-                  child: TicketWidget(
-                    ticket: ListTicket.veDiHCM[0],
+                  child: Center(
+                    child: TicketWidget(
+                      ticket: ListTicket.veDiHCM[0],
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -63,7 +66,8 @@ class TicketsOverviewScreen extends StatelessWidget {
                                   ticket: ListTicket.veDiHCM[1],
                                 )));
                   },
-                  child: TicketWidget(ticket: ListTicket.veDiHCM[1]),
+                  child: Center(
+                      child: TicketWidget(ticket: ListTicket.veDiHCM[1])),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -74,8 +78,10 @@ class TicketsOverviewScreen extends StatelessWidget {
                                   ticket: ListTicket.veDiHCM[2],
                                 )));
                   },
-                  child: TicketWidget(
-                    ticket: ListTicket.veDiHCM[2],
+                  child: Center(
+                    child: TicketWidget(
+                      ticket: ListTicket.veDiHCM[2],
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -87,19 +93,21 @@ class TicketsOverviewScreen extends StatelessWidget {
                                   ticket: ListTicket.veDiHCM[3],
                                 )));
                   },
-                  child: TicketWidget(
-                    ticket: ListTicket.veDiHCM[3],
+                  child: Center(
+                    child: TicketWidget(
+                      ticket: ListTicket.veDiHCM[3],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(
               'Vé đi tỉnh khác',
               style: TextStyle(
-                  fontSize: 25,
+                  fontSize: s * 0.06,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic),
             ),
@@ -118,8 +126,10 @@ class TicketsOverviewScreen extends StatelessWidget {
                                 ticket: ListTicket.veDiTinhKhac[0],
                               )));
                 },
-                child: TicketWidget(
-                  ticket: ListTicket.veDiTinhKhac[0],
+                child: Center(
+                  child: TicketWidget(
+                    ticket: ListTicket.veDiTinhKhac[0],
+                  ),
                 ),
               ),
               GestureDetector(
@@ -131,8 +141,10 @@ class TicketsOverviewScreen extends StatelessWidget {
                                 ticket: ListTicket.veDiTinhKhac[1],
                               )));
                 },
-                child: TicketWidget(
-                  ticket: ListTicket.veDiTinhKhac[1],
+                child: Center(
+                  child: TicketWidget(
+                    ticket: ListTicket.veDiTinhKhac[1],
+                  ),
                 ),
               ),
               GestureDetector(
@@ -144,8 +156,10 @@ class TicketsOverviewScreen extends StatelessWidget {
                                 ticket: ListTicket.veDiTinhKhac[2],
                               )));
                 },
-                child: TicketWidget(
-                  ticket: ListTicket.veDiTinhKhac[2],
+                child: Center(
+                  child: TicketWidget(
+                    ticket: ListTicket.veDiTinhKhac[2],
+                  ),
                 ),
               ),
               GestureDetector(
@@ -157,8 +171,10 @@ class TicketsOverviewScreen extends StatelessWidget {
                                 ticket: ListTicket.veDiTinhKhac[3],
                               )));
                 },
-                child: TicketWidget(
-                  ticket: ListTicket.veDiTinhKhac[3],
+                child: Center(
+                  child: TicketWidget(
+                    ticket: ListTicket.veDiTinhKhac[3],
+                  ),
                 ),
               ),
             ],

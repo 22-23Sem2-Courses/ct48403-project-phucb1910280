@@ -24,23 +24,26 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return AlertDialog(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+      scrollable: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(s * 0.05))),
       content: SizedBox(
-        height: 400,
+        height: s * 0.9,
+        width: s * 0.7,
         child: Column(
           children: [
             CircleAvatar(
-              radius: 100,
+              radius: s * 0.2,
               backgroundImage: NetworkImage(_imgUrl),
             ),
             const SizedBox(
               height: 20,
             ),
             SizedBox(
-              height: 180,
-              width: 300,
+              height: s * 0.44,
+              width: s * 0.55,
               child: GridView.builder(
                 itemCount: ListUserProfileImgURL.listUserProfileImgURL.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,7 +68,7 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(50)),
+                                const BorderRadius.all(Radius.circular(150)),
                             border: Border.all(
                               color: Colors.teal,
                               width: index == curInd ? 5 : 0,
@@ -88,7 +91,10 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Hủy'),
+          child: Text(
+            'Hủy',
+            style: TextStyle(fontSize: s * 0.045),
+          ),
         ),
         TextButton(
           onPressed: () async {
@@ -109,13 +115,19 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
                   return AlertDialog(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    content: const Text('Cập nhật thành công!'),
+                    content: Text(
+                      'Cập nhật thành công!',
+                      style: TextStyle(fontSize: s * 0.05),
+                    ),
                     actions: [
                       TextButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: const Text('OK')),
+                          child: Text(
+                            'OK',
+                            style: TextStyle(fontSize: s * 0.04),
+                          )),
                     ],
                   );
                 },
@@ -130,7 +142,10 @@ class _PopUpChangeImgProfileState extends State<PopUpChangeImgProfile> {
               });
             });
           },
-          child: const Text('Lưu'),
+          child: Text(
+            'Lưu',
+            style: TextStyle(fontSize: s * 0.045),
+          ),
         ),
       ],
     );

@@ -8,10 +8,14 @@ class UserProfileDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Thông tin của tôi'),
+        title: Text(
+          'Thông tin của tôi',
+          style: TextStyle(fontSize: s * 0.05),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -26,16 +30,20 @@ class UserProfileDetail extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                userAvatar(snapshot.data!.docs[0]['profileImg'].toString()),
+                userAvatar(
+                    snapshot.data!.docs[0]['profileImg'].toString(), context),
                 const SizedBox(
                   height: 20,
                 ),
-                userDetail(
-                    'Họ tên:', snapshot.data!.docs[0]['fullName'].toString()),
+                userDetail('Họ tên:',
+                    snapshot.data!.docs[0]['fullName'].toString(), context),
                 userDetail('Số điện thoại:',
-                    snapshot.data!.docs[0]['phoneNumber'].toString()),
+                    snapshot.data!.docs[0]['phoneNumber'].toString(), context),
                 userDetail(
-                    'Email:', snapshot.data!.docs[0]['email'].toString()),
+                  'Email:',
+                  snapshot.data!.docs[0]['email'].toString(),
+                  context,
+                )
               ],
             );
           } else {
@@ -50,18 +58,20 @@ class UserProfileDetail extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const EditUserData()));
           },
-          child: editProfileButton()),
+          child: editProfileButton(context)),
     );
   }
 
-  Widget userDetail(String label, String value) {
+  Widget userDetail(String label, String value, BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+      padding: EdgeInsets.fromLTRB(s * 0.05, 8, 20, 8),
       child: Row(
         children: [
           Text(
             label,
-            style: const TextStyle(color: Colors.black, fontSize: 22),
+            style: TextStyle(color: Colors.black, fontSize: s * 0.05),
           ),
           const SizedBox(
             width: 20,
@@ -71,7 +81,7 @@ class UserProfileDetail extends StatelessWidget {
               value,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
-              style: const TextStyle(color: Colors.teal, fontSize: 22),
+              style: TextStyle(color: Colors.teal, fontSize: s * 0.05),
             ),
           ),
         ],
@@ -79,31 +89,34 @@ class UserProfileDetail extends StatelessWidget {
     );
   }
 
-  Widget editProfileButton() {
+  Widget editProfileButton(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
+
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 5),
-      height: 60,
+      height: s * 0.13,
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
           color: Colors.teal,
         ),
         color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(30)),
+        borderRadius: const BorderRadius.all(Radius.circular(90)),
       ),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Icon(
           Icons.edit,
           color: Colors.teal,
+          size: s * 0.05,
         ),
         SizedBox(
-          width: 15,
+          width: s * 0.02,
         ),
         Text(
           'Chỉnh sửa thông tin',
           style: TextStyle(
             color: Colors.teal,
-            fontSize: 25,
+            fontSize: s * 0.05,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -111,10 +124,12 @@ class UserProfileDetail extends StatelessWidget {
     );
   }
 
-  Widget userAvatar(String userImgURL) {
+  Widget userAvatar(String userImgURL, BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
+
     return Container(
-      height: 260,
-      width: 260,
+      height: s * 0.6,
+      width: s * 0.6,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(

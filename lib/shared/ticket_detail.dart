@@ -96,15 +96,19 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: Text(widget.ticket.hanhTrinh),
+        title: Text(
+          widget.ticket.hanhTrinh,
+          style: TextStyle(fontSize: s * 0.045),
+        ),
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(s * 0.02),
         child: ListView(
           children: [
             Center(
@@ -118,74 +122,75 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                     ),
                   ),
                   Positioned(
-                    top: 13,
-                    left: 50,
+                    top: s * 0.041,
+                    left: s * 0.13,
                     child: Text(
                       widget.ticket.diemDi,
-                      style: const TextStyle(fontSize: 25, color: Colors.teal),
+                      style: TextStyle(fontSize: s * 0.05, color: Colors.teal),
                     ),
                   ),
                   Positioned(
-                    top: 43,
-                    left: 50,
+                    top: s * 0.12,
+                    left: s * 0.13,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
                         widget.ticket.dcDiemDi,
                         maxLines: 2,
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: TextStyle(
+                          fontSize: s * 0.035,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 105,
-                    left: 70,
+                    top: s * 0.26,
+                    left: s * 0.13,
                     child: Row(
                       children: [
                         Text(
                           widget.ticket.khoanCach,
-                          style: const TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: s * 0.030),
                         ),
-                        const SizedBox(
-                          width: 30,
-                          child: Center(child: Text('~')),
+                        SizedBox(
+                          width: s * 0.1,
+                          child: Center(
+                              child: Text(
+                            '~',
+                            style: TextStyle(fontSize: s * 0.03),
+                          )),
                         ),
                         Text(
                           '${widget.ticket.thoiGianDuKien} tiếng',
-                          style: const TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: s * 0.035),
                         ),
                       ],
                     ),
                   ),
                   Positioned(
-                    top: 148,
-                    left: 50,
+                    top: s * 0.408,
+                    left: s * 0.13,
                     child: Text(
                       widget.ticket.diemDen,
-                      style: const TextStyle(fontSize: 25, color: Colors.teal),
+                      style: TextStyle(fontSize: s * 0.05, color: Colors.teal),
                     ),
                   ),
                   Positioned(
-                    top: 178,
-                    left: 50,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: Text(
-                        widget.ticket.dcDiemDen,
-                        maxLines: 2,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                    top: s * 0.49,
+                    left: s * 0.13,
+                    child: Text(
+                      widget.ticket.dcDiemDen,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: s * 0.035,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: s * 0.02,
             ),
             detailInfo('Giờ khởi hành', widget.ticket.gioKhoiHanhHienThi,
                 setTealColor: true, setBold: true),
@@ -208,10 +213,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         onPressed: () {
           showDateTimePicker(context);
         },
-        icon: const Icon(Icons.calendar_month_outlined),
-        label: const Text(
+        icon: Icon(Icons.calendar_month_outlined, size: s * 0.04),
+        label: Text(
           'Chọn ngày',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: s * 0.035),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -223,6 +228,8 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
 
   Widget detailInfo(String key, dynamic value,
       {bool setTealColor = false, bool setBold = false}) {
+    var s = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Row(
@@ -230,8 +237,8 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         children: [
           Text(
             '$key:',
-            style: const TextStyle(
-              fontSize: 22,
+            style: TextStyle(
+              fontSize: s * 0.035,
               color: Colors.black,
             ),
           ),
@@ -241,7 +248,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
           Text(
             value,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: s * 0.035,
               fontWeight: setBold ? FontWeight.bold : FontWeight.normal,
               color: setTealColor ? Colors.teal : Colors.black,
             ),

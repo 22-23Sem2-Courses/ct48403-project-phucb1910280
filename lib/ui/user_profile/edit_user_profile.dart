@@ -137,9 +137,13 @@ class _EditUserDataState extends State<EditUserData> {
 
   @override
   Widget build(BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chỉnh sửa thông tin'),
+        title: Text(
+          'Chỉnh sửa thông tin',
+          style: TextStyle(fontSize: s * 0.05),
+        ),
         elevation: 0,
       ),
       body: ListView(
@@ -148,9 +152,9 @@ class _EditUserDataState extends State<EditUserData> {
             height: 10,
           ),
           customizeTextField('Họ tên:', 'Vui lòng nhập họ tên', nameController,
-              TextInputType.text),
+              TextInputType.text, context),
           customizeTextField('Số điện thoại:', 'Vui lòng nhập số điện thoại',
-              phoneController, TextInputType.number),
+              phoneController, TextInputType.number, context),
           const SizedBox(
             height: 5,
           ),
@@ -199,10 +203,10 @@ class _EditUserDataState extends State<EditUserData> {
                             );
                           });
                     },
-                    child: const Text(
+                    child: Text(
                       'Đổi ảnh đại diện',
                       style: TextStyle(
-                        fontSize: 23,
+                        fontSize: s * 0.05,
                       ),
                     )),
               ],
@@ -217,20 +221,22 @@ class _EditUserDataState extends State<EditUserData> {
       String labelText,
       String hintText,
       TextEditingController textEditingController,
-      TextInputType textInputType) {
+      TextInputType textInputType,
+      BuildContext context) {
+    var s = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
       child: TextField(
-        style: const TextStyle(
-          fontSize: 22,
+        style: TextStyle(
+          fontSize: s * 0.05,
         ),
         controller: textEditingController,
         keyboardType: textInputType,
         decoration: InputDecoration(
           label: Text(labelText),
-          labelStyle: const TextStyle(
+          labelStyle: TextStyle(
             color: Colors.teal,
-            fontSize: 25,
+            fontSize: s * 0.05,
           ),
           hintText: hintText,
           fillColor: Colors.grey[50],
@@ -239,13 +245,13 @@ class _EditUserDataState extends State<EditUserData> {
                 color: Colors.grey,
                 width: 1,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(40))),
+              borderRadius: BorderRadius.all(Radius.circular(90))),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.teal,
               width: 1,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(40)),
+            borderRadius: BorderRadius.all(Radius.circular(90)),
           ),
         ),
       ),
@@ -261,7 +267,7 @@ class _EditUserDataState extends State<EditUserData> {
           color: Colors.teal,
         ),
         color: isSaveButton == true ? Colors.teal : null,
-        borderRadius: const BorderRadius.all(Radius.circular(30)),
+        borderRadius: const BorderRadius.all(Radius.circular(90)),
       ),
       child: Center(
         child: Text(

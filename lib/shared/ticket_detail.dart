@@ -103,7 +103,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         backgroundColor: Colors.teal,
         title: Text(
           widget.ticket.hanhTrinh,
-          style: TextStyle(fontSize: s * 0.045),
+          style: TextStyle(fontSize: s * 0.05),
         ),
         elevation: 0,
       ),
@@ -122,23 +122,23 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                     ),
                   ),
                   Positioned(
-                    top: s * 0.041,
+                    top: s * 0.040,
                     left: s * 0.13,
                     child: Text(
                       widget.ticket.diemDi,
-                      style: TextStyle(fontSize: s * 0.05, color: Colors.teal),
+                      style: TextStyle(fontSize: s * 0.06, color: Colors.teal),
                     ),
                   ),
                   Positioned(
-                    top: s * 0.12,
+                    top: s * 0.11,
                     left: s * 0.13,
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: s * 0.7,
                       child: Text(
                         widget.ticket.dcDiemDi,
                         maxLines: 2,
                         style: TextStyle(
-                          fontSize: s * 0.035,
+                          fontSize: s * 0.045,
                         ),
                       ),
                     ),
@@ -150,39 +150,42 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                       children: [
                         Text(
                           widget.ticket.khoanCach,
-                          style: TextStyle(fontSize: s * 0.030),
+                          style: TextStyle(fontSize: s * 0.045),
                         ),
                         SizedBox(
                           width: s * 0.1,
                           child: Center(
                               child: Text(
                             '~',
-                            style: TextStyle(fontSize: s * 0.03),
+                            style: TextStyle(fontSize: s * 0.045),
                           )),
                         ),
                         Text(
                           '${widget.ticket.thoiGianDuKien} tiếng',
-                          style: TextStyle(fontSize: s * 0.035),
+                          style: TextStyle(fontSize: s * 0.045),
                         ),
                       ],
                     ),
                   ),
                   Positioned(
-                    top: s * 0.408,
+                    top: s * 0.40,
                     left: s * 0.13,
                     child: Text(
                       widget.ticket.diemDen,
-                      style: TextStyle(fontSize: s * 0.05, color: Colors.teal),
+                      style: TextStyle(fontSize: s * 0.06, color: Colors.teal),
                     ),
                   ),
                   Positioned(
-                    top: s * 0.49,
+                    top: s * 0.47,
                     left: s * 0.13,
-                    child: Text(
-                      widget.ticket.dcDiemDen,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: s * 0.035,
+                    child: SizedBox(
+                      width: s * 0.7,
+                      child: Text(
+                        widget.ticket.dcDiemDen,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: s * 0.045,
+                        ),
                       ),
                     ),
                   ),
@@ -213,10 +216,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         onPressed: () {
           showDateTimePicker(context);
         },
-        icon: Icon(Icons.calendar_month_outlined, size: s * 0.04),
+        icon: Icon(Icons.calendar_month_outlined, size: s * 0.045),
         label: Text(
           'Chọn ngày',
-          style: TextStyle(fontSize: s * 0.035),
+          style: TextStyle(fontSize: s * 0.045),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -238,7 +241,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
           Text(
             '$key:',
             style: TextStyle(
-              fontSize: s * 0.035,
+              fontSize: s * 0.05,
               color: Colors.black,
             ),
           ),
@@ -248,7 +251,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
           Text(
             value,
             style: TextStyle(
-              fontSize: s * 0.035,
+              fontSize: s * 0.05,
               fontWeight: setBold ? FontWeight.bold : FontWeight.normal,
               color: setTealColor ? Colors.teal : Colors.black,
             ),

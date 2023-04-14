@@ -22,7 +22,7 @@ class ListTicket {
       id: null,
     ),
     Ticket(
-      hanhTrinh: 'Đà lạt -> Sài Gòn',
+      hanhTrinh: 'Đà Lạt -> Sài Gòn',
       maHanhTrinh: 'dl-hcm',
       gioKhoiHanhHienThi: '14:30 chiều',
       gioKhoiHanhSoSanh: '14:30:00.000000',

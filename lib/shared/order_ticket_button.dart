@@ -27,7 +27,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size.width;
     return Container(
-      height: s * 0.09,
+      height: s * 0.14,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(40)),
@@ -48,7 +48,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                 return StatefulBuilder(
                   builder: (context, setState) {
                     return SizedBox(
-                      height: s * 0.4,
+                      height: s * 0.7,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Column(
@@ -68,7 +68,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                               children: [
                                 Text(
                                   'Số lượng:',
-                                  style: TextStyle(fontSize: s * 0.035),
+                                  style: TextStyle(fontSize: s * 0.05),
                                 ),
                                 SizedBox(
                                   width: s * 0.2,
@@ -109,8 +109,8 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                           child: Center(
                                             child: Text(
                                               '$slVe vé',
-                                              style: TextStyle(
-                                                  fontSize: s * 0.035),
+                                              style:
+                                                  TextStyle(fontSize: s * 0.05),
                                             ),
                                           ),
                                         ),
@@ -128,8 +128,8 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                               }
                                             },
                                             icon: const Icon(Icons.add)),
-                                        SizedBox(
-                                          width: s * 0.05,
+                                        const Expanded(
+                                          child: SizedBox(),
                                         ),
                                       ],
                                     ),
@@ -144,7 +144,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                               children: [
                                 Text(
                                   'Tổng cộng:',
-                                  style: TextStyle(fontSize: s * 0.035),
+                                  style: TextStyle(fontSize: s * 0.05),
                                 ),
                                 const Expanded(
                                   child: SizedBox(),
@@ -154,7 +154,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
                                           locale: 'vi-VN', decimalDigits: 0)
                                       .format(tong),
                                   style: TextStyle(
-                                      fontSize: s * 0.037,
+                                      fontSize: s * 0.05,
                                       fontWeight: FontWeight.bold),
                                 )
                               ],
@@ -185,7 +185,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
           },
           child: Text(
             'Đặt vé',
-            style: TextStyle(color: Colors.teal, fontSize: s * 0.04),
+            style: TextStyle(color: Colors.teal, fontSize: s * 0.06),
           )),
     );
   }
@@ -208,7 +208,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
           'Hủy',
           style: TextStyle(
             color: Colors.teal,
-            fontSize: s * 0.035,
+            fontSize: s * 0.05,
           ),
         ),
       ),
@@ -260,7 +260,7 @@ class _OrderTicketButtonState extends State<OrderTicketButton> {
           'Đặt vé',
           style: TextStyle(
             color: Colors.white,
-            fontSize: s * 0.035,
+            fontSize: s * 0.05,
           ),
         ),
       ),

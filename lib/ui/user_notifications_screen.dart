@@ -44,16 +44,18 @@ class _UserNotificationsState extends State<UserNotifications> {
                             : Colors.transparent),
                     child: ListTile(
                       onTap: () async {
-                        await FirebaseFirestore.instance
-                            .collection('XBusCustomers')
-                            .doc(FirebaseAuth.instance.currentUser!.email)
-                            .collection('userNotifications')
-                            .doc(snapshot.data!.docs[index].id)
-                            .update({
-                          'daDoc': 'daDoc',
-                        }).then((value) {
-                          notif.markRead();
-                        });
+                        if (snapshot.data!.docs[index]['daDoc'] == 'chua') {
+                          await FirebaseFirestore.instance
+                              .collection('XBusCustomers')
+                              .doc(FirebaseAuth.instance.currentUser!.email)
+                              .collection('userNotifications')
+                              .doc(snapshot.data!.docs[index].id)
+                              .update({
+                            'daDoc': 'daDoc',
+                          }).then((value) {
+                            notif.markRead();
+                          });
+                        }
                       },
                       isThreeLine: true,
                       leading: snapshot.data!.docs[index]['daDoc'] == 'chua'

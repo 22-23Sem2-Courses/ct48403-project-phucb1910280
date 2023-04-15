@@ -57,7 +57,8 @@ flutter_icons:
 
 flutter_native_splash:
   image: "assets/images/XBus.jpg"
-  color: "008080"
+  color: "#42a5f5"
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
